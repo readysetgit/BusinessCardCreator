@@ -1,0 +1,144 @@
+<html>
+    <head> <!--Importing the javascript and css files. Make sure they are in the same folder-->
+            <script src="functions.js"></script>
+            <link href="styles.css" rel="stylesheet"/>
+
+    </head>
+
+    <title>Create a Bussiness Card</title>
+    
+    <body>
+        <div class="top-container">  
+                <h1>Want your own Bussiness Card?</h1>
+                <p>Start Scrolling!</p>
+        </div>
+                  
+        <div class="header" id="myHeader"> <!--A sticky scroll div, "sticky" class gets added on scrolling after a certain point, a tricky bit this one-->
+                <h2>The Card Creator</h2>
+        </div>
+
+        <!--Why a bussiness card?-->
+        <div class="content">
+                <div style="word-wrap: break-word" >   
+                  <pre>
+                        A business card is a road map to opportunity. 
+                        It could lead you to a great new job, a great business partnership, 
+                        or simply help your business make money. 
+                        Think of a situation where you you've got your networking pants on 
+                        and you're looking to benefit your business by 
+                        making contacts. Suddenly, you notice someone that could be a potential client. 
+                        What do you do? 
+                        You introduce yourself and describe what you do, but at some point, 
+                        you'll need to hand off your contact information. 
+                        A business card saves you time and makes you look professional. 
+                        You're not fumbling around with a pen to scribble your e-mail address on a cocktail napkin, 
+                        and you also give them a sense that this isn't your first rodeo.
+                        <small><a href="https://lifehacker.com/why-business-cards-still-matter-and-how-to-effectively-1651222760"><i>source</i></a></small>
+                  </pre>  
+        </div>
+
+
+
+        <div class="container">
+                <form name="cardForm"  class="form">
+                        <!--All the form inputs below arranged in this fashion : "Label, Input, Small validation alert"-->
+                        <!--Notice how the <small> alerts have the name "alerts" in common, this name is used to check their status during form validation-->
+                        <!--Validation occurs in every input onblur. The current input's data is sent to the corresponding validation function as a variable called "this" -->
+                        <div class="form-element">
+                                <label for="userName">Name</label>
+                                <input name="userName" id="userName" onblur="validateName(this)" class="form-control" type="text" placeholder="Enter your Full Name">
+                                <small id="nameAlert" class="smallAlert" name="alerts" >Please Enter your name</small>
+                        </div>
+                        <div class="form-element">
+                                <label for="companyName">Company</label>
+                                <input name="companyName" id="companyName" onblur="validateCompany(this)"type="text" class="form-control" placeholder="Enter the name of your company">
+                                <small id="companyAlert" class="smallAlert" name="alerts" >Surely you must have SOME company</small>
+                        </div>
+                        <div class="form-element">
+                                <label for="address">Address</label>
+                                <input name="address" id="address" onblur="validateAddress(this)" type="text" class="form-control" placeholder="Enter your address">
+                                <small id="addressAlert" class="smallAlert" name="alerts">You're not homeless now are you?</small>
+                        </div>
+                        <div class="form-element">
+                                <label for="phoneNumber">Phone Number</label>
+                                <input name="phoneNumber" id="phoneNumber" onblur="validateNumber(this)" type="text" class="form-control" placeholder="Enter your phone number">
+                                <small id="numberAlert" class="smallAlert" name="alerts">Enter a valid number (only digits allowed)</small>
+                        </div>
+
+                        <!--The gender checkbox runs toggleGender() function on clicking-->
+                        <div class="form-element">
+                            <label name="checkboxLabel" ><input id="genderCheckbox" type="checkbox" onClick="toggleGender()">I do not wish to specify my gender</label>
+                        </div>
+                        <div class="form-element">
+                               <label name="genderLabel"><input type="radio" name="gender" value="Male" >Male</label>     
+                               <label name="genderLabel"><input type="radio" name="gender" value="Female" checked >Female</label>
+                               <label name="genderLabel"><input type="radio" name="gender" value="Other" >Other</label>  
+                        </div>
+                        <div class="form-element">
+                                <label for="foodDropdown">What are you craving right now?</label>
+                                <select id="food" name="foodDropdown" class="form-element">
+                                        <option selected="selected">Dessert</option>
+                                        <option>Smoothie</option>
+                                        <option>Pizza</option>
+                                        <option>Pasta</option>
+                                </select>
+                        </div>
+                        
+                        <!--Finally, the submit button of type "button" and NOT "submit"-->
+                        <div class="form-element">
+                            <input type="button" onClick="makeCard()" class="button" value="Easy Peasy Lemon Squeezy!"/>
+                        </div>
+
+                </form>
+        </div>
+        <!--The Bussiness Card! It gets filled when user presses the "Easy Peasy Lemon Squeezy!"-->
+        <div id="CARD" class="card trophy" style="width: 18rem;display: block;background-image: url('images/header.jpg')">
+                <div class="card-body">
+                  <h5 id="cardName" class="card-title" style="font-size:25px">Name </h5>
+                  <h6 id="cardNumber" class="card-subtitle" style="font-size:15px">Phone Number</h6>
+                  <h6 id="cardGender" class="card-subtitle" style="font-size:15px">Gender</h6>
+                  <h6 id="cardCompany" class="card-subtitle" style="font-size:15px">Company</h6>
+                  <h6 id="cardFood" class="card-subtitle" style="font-size:15px">Food</h6>
+                  <p id="cardAddress" class="card-text" style="font-size:15px">221B Baker Street</p>
+                </div>
+        </div>
+
+        <div class="credits" style="margin-top: 100px">
+                <h3> Thank You! </h3>  
+        </div>
+        <div class="trophy">
+            <pre>          
+                            ___________
+                           '._==_==_=_.'
+                           .-\:      /-.
+                          | (|:.     |) |
+                           '-|:.     |-'
+                             \::.    /
+                              '::. .'
+                                ) (
+                              _.' '._
+                             `"""""""`  
+                            
+            </pre>
+        </div>
+        
+
+        <script>
+                // Function to make the scroll sticky
+                window.onscroll = function() {myFunction()}; //window.onscroll checks if the user has scrolled
+                
+                var header = document.getElementById("myHeader");
+                var sticky = header.offsetTop;
+                
+                //If we've scroll past a certain point, the "sticky" class gets added to the header div
+                function myFunction() {
+                  if (window.pageYOffset > sticky) {  
+                    header.classList.add("sticky");
+                  } else {
+                    header.classList.remove("sticky"); //The "sticky" class gets removed once we've scrolled back up
+                  }
+                }
+        </script>
+                
+    </body>
+</html>
